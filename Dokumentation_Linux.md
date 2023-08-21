@@ -201,4 +201,29 @@ In diesem Beispiel wird der Inhalt des Files mit `cat` ausgelese, und anschliess
 
 ### Manipulieren
 
+Mit `cut` ist es möglich, Strings zu verarbeiten. Die Optionen hierzu ermöglichen es, den String nach Trennzeichen (Delimiter) oder Feld zu 
+bearbeiten. Auch kann man mit `--outpu-delimiter=STRING` ein neues Trennzeichen für den Output festlegen.
 
+Gehen wir als wieder vom zuvor genutzten File aus:
+
+Der Inhalt des Files sieht so aus:
+
+```txt
+Lucas m infw2022b 2024
+Patrick m infw2022b 2024
+[...]
+```
+
+Wenn wir nun nur die Namen der Schüler möchten, können wir dies wie folgt mit `cut` machen:
+
+```bash
+cut -f 1 schueler.txt
+```
+
+## su, sudo
+
+`su`, substitue user identity, erlaubt es die Identität eines anderen Nutzers anzunehmen. Dies kann nützlich sein, wenn man gewisse Sachen als root machen möchte, die dem User nicht möglich sind. <br>
+Wichtig ist hier, dass man die Session nun als den angegeben User nutzt.
+
+`sudo` ist die empfohlene herangehensweise: Anstelle davon, dass man als `root` agiert, bekommt man für den darauffolgenden Befehl die Berechtigungen vom `root`. <br>
+Dies ist vorallem deshalbt empfohlen, weil man als unprivilegierter User arbeiten sollte. Ansonsten besteht die Gefahr, dass man Berechtigungen auf gewissen Files oder Directories anlegen kann, welche nebst Programmen auch das OS selbst behindern können.

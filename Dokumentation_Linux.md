@@ -184,3 +184,21 @@ ls | grep -i "test.txt"
 ```
 
 Hier wird mit ls der Inhalt des aktuellen Directories ausgegeben, und direkt mit "grep" durchsucht.
+
+## Stringverarbeitung
+
+Strings können in Linux auf verschiedenste Arten verarbeitet werden. Darunter finden sich folgende Methoden:
+
+### Filtern, grep
+
+Mit dem Tool `grep` können String mittels RegEx gefiltert und durchsucht werden. Ein Beispiel für die Nutzung von `grep`: Wir haben ein File, in welchem die Namen aller Schüler der Klasse infw2022b zu finden ist; es heisst schueler.txt.
+
+```bash
+cat schueler.txt | grep -i "patrick"
+```
+
+In diesem Beispiel wird der Inhalt des Files mit `cat` ausgelese, und anschliessend mit `grep` gefiltert. Die nutzung der Option `-i` erlaubt es, dass case-insensitive gesucht werden kann - deshalb wird der Name auch vollständig in Kleinbuchstaben geschrieben.
+
+### Manipulieren
+
+

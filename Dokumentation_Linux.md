@@ -28,7 +28,7 @@ Dort wo man die Struktur des Befehls nicht kennt, gibts es im cli selbst zwei Me
 - man <Befehl>
     - Hier finden sich die "manpages", welche eine Sammlung an Handbüchern zu einer Grosszahl Befehlen ist
 - <Befehl> -h, <Befehl> --help
-    - Viele cli-Tools beinhalten das Argument "-h" oder "--help". Der Output zeigt Informationen zum Programm sowie zu der Befehlsstruktur sowie -optionen
+    - Viele cli-Tools beinhalten das Argument "-h" oder "--help". Der Output zeigt Informationen zum Programm sowie zu der Befehlsstruktur und -optionen
 
 ### Tastenkürzel
 

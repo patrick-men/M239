@@ -14,13 +14,13 @@ All das wird in einem leicht verständlichen User Interface ermöglicht, wo auch
 1. Apt updaten, upgraden
 
 ```bash
-sudo apt update && sudo apt upgrade
+sudo apt update -y && sudo apt upgrade -y
 ```
 
 2. Wireshark herunterladen
 
 ```bash
-sudo apt install
+sudo apt install wireshark -y
 ```
 
 3. User der Wireshark-Gruppe zuteilen

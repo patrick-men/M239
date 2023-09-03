@@ -80,5 +80,43 @@ dig www.google.ch @127.0.0.1
 
 ### Konfigurationen vmLS1, vmWP1, vmLP1
 
-Die Konfigurationen von vmWP1 und vmLP1 werden übers GUI gemacht:
+Die Konfigurationen von vmWP1 und vmLP1 werden übers GUI gemacht - vmLS1 wird übers CLI bearbeitet:
+
+vmWP1: ![Alt text](image-11.png)
+
+vmLP1: ![Alt text](image-12.png)
+
+vmLS1: ![Alt text](image-13.png)
+
+Die Änderungen in vmLS1 müssen noch mit `sudo netplan apply` aktiviert werden.
+
+## Fehlersuche
+
+Fehler in der Konfiguraton würden im Bind log erscheinen. Dieser findet sich unter `/var/log/syslog`.
+
+## Kommentare
+
+Um Kommentare in einem `.yaml` File zu schreiben, benötigen diese ein `//` davor.
+
+## Einrücken
+
+Die Einrückung ist bei der Arbeit mit `.yaml` Files sehr ausschlaggebend, und oft auch der Grund für viele Fehlkonfigurationen.
+
+Wichtig ist hier, dass man durchgehend entweder mit Tabulator oder mit Leerschlägen einrückt, und diese Methoden nicht durchmischt anwendet.
+
+## Liste der Root-Server aktualisieren
+
+Um diese Liste zu aktualisieren, kann mal als `su` folgenden Befehl ausführen:
+
+```bash
+dig @a.root-servers.net | grep -E -v ';|^$' sort > /etc/bind/db.root
+```
+
+## DNS-Zonen einrichten
+
+### Netzwerkübersicht
+
+
+
+
 

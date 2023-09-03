@@ -116,7 +116,7 @@ dig @a.root-servers.net | grep -E -v ';|^$' sort > /etc/bind/db.root
 
 ### Netzwerkübersicht
 
-
+![Alt text](image-14.png)
 
 
 

@@ -118,5 +118,108 @@ dig @a.root-servers.net | grep -E -v ';|^$' sort > /etc/bind/db.root
 
 ![Alt text](image-14.png)
 
+### Zonendatei für die DMZ
 
+```
+;
+; Zonendatei für dmz.mattefit.ch.
+; /etc/bind/db.ch.mattefit.dmz
+;
+$TTL    3600
+@       IN      SOA     vmls1.dmz.mattefit.ch.      root.mattefit.ch. (
+                         1
+                        1H
+                        2H
+                        1D
+                        1H )
 
+@       IN      NS      vmls1.dmz.mattefit.ch.
+vmlf1   IN      A       192.168.220.1
+vmls1   IN      A       192.168.220.10
+```
+
+```
+;
+; Zonendatei für 220.168.192.in-addr.arpa.
+; /etc/bind/db.192.168.220
+;
+$TTL    3600
+@       IN      SOA     vmls1.dmz.mattefit.ch.      root.mattefit.ch. (
+                         1
+                        1H
+                        2H
+                        1D
+                        1H )
+
+@       IN      NS      vmls1.dmz.mattefit.ch.
+1       IN      PTR     vmlf1.dmz.mattefit.ch.
+10      IN      PTR     vmls1.dmz.mattefit.ch.
+```
+
+```
+//
+// DMZ
+//
+zone "dmz.mattefit.ch" {
+        type master;
+        notify no;
+        file "/etc/bind/db.ch.mattefit.dmz";
+};
+zone "220.168.192.in-addr.arpa" {
+        type master;
+        notify no;
+        file "/etc/bind/db.192.168.220";
+};
+```
+
+```
+;
+; Zonendatei für lan.mattefit.ch.
+; /etc/bind/db.ch.mattefit.lan
+;
+$TTL    3600
+@       IN      SOA     vmwp1.lan.mattefit.ch.      root.mattefit.ch. (
+                         1
+                        1H
+                        2H
+                        1D
+                        1H )
+
+@       IN      NS      vmwp1.lan.mattefit.ch.
+vmlf1   IN      A       192.168.110.1
+vmwp1   IN      A       192.168.110.10
+```
+
+```
+;
+; Zonendatei für 110.168.192.in-addr.arpa.
+; /etc/bind/db.192.168.110
+;
+$TTL    3600
+@       IN      SOA     vmwp1.lan.mattefit.ch.      root.mattefit.ch. (
+                         1
+                        1H
+                        2H
+                        1D
+                        1H )
+
+@       IN      NS      vmwp1.lan.mattefit.ch.
+1       IN      PTR     vmlf1.lan.mattefit.ch.
+10      IN      PTR     vmwp1.lan.mattefit.ch.
+```
+
+```
+//
+// LAN
+//
+zone "lan.mattefit.ch" {
+        type master;
+        notify no;
+        file "/etc/bind/db.ch.mattefit.lan";
+};
+zone "110.168.192.in-addr.arpa" {
+        type master;
+        notify no;
+        file "/etc/bind/db.192.168.110";
+};
+```

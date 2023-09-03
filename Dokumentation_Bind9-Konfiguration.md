@@ -79,3 +79,6 @@ dig www.google.ch @127.0.0.1
 ![Alt text](image-10.png)
 
 ### Konfigurationen vmLS1, vmWP1, vmLP1
+
+Die Konfigurationen von vmWP1 und vmLP1 werden übers GUI gemacht:
+

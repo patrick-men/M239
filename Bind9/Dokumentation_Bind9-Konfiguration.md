@@ -118,6 +118,28 @@ dig @a.root-servers.net | grep -E -v ';|^$' sort > /etc/bind/db.root
 
 ![Alt text](image-14.png)
 
+### Erklärung der Zonendatei
+
+Um DNS-Zonen anzulegen, müssen Zonendateien erstellt werden. Diese werden hier mit Kommentaren (//) genauer erklärt, damit die folgenden Kapitel verstanden werden können:
+
+```text
+;
+; Zonendatei für X.Y.ch. im DMZ
+; Datei: /etc/bind/X.Y.dmz
+;
+$TTL    3600 // Time to Live für diese Zone, 1 Stunde
+@       IN      SOA     vmls1.dmz.mattefit.ch.      root.mattefit.ch. (
+                         1 // Seriennummer
+                        1H // Refresh interval, 1 Stunde
+                        2H // Retry interval, 2 Stunden
+                        1D // Ablaufzeit, 1 Tag
+                        1H ) // Min. TTL, 1 Stunde
+
+@       IN      NS      vmls1.X.Y.ch. // Name Server Record für die Zone, zeigt auf vmls1.X.Y.ch
+vmlf1   IN      A       192.168.220.1 // A Record für vmlf1, mappt zur IP-Adresse 192.168.220.1
+vmls1   IN      A       192.168.220.10 // A Record für vmls1, mappt zur IP-Adresse 192.168.220.10
+```
+
 ### Zonendatei für die DMZ
 
 ```text
@@ -289,3 +311,4 @@ In diesem Kapitel werden nslookups von vmWP1 aus angezeigt:
 
 `dmz.mattefit.ch`:
 ![Alt text](image-16.png)
+

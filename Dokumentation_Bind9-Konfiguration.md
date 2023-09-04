@@ -120,7 +120,7 @@ dig @a.root-servers.net | grep -E -v ';|^$' sort > /etc/bind/db.root
 
 ### Zonendatei für die DMZ
 
-```
+```text
 ;
 ; Zonendatei für dmz.mattefit.ch.
 ; /etc/bind/db.ch.mattefit.dmz
@@ -138,9 +138,9 @@ vmlf1   IN      A       192.168.220.1
 vmls1   IN      A       192.168.220.10
 ```
 
-```
+```text
 ;
-; Zonendatei für 220.168.192.in-addr.arpa.
+; Zonendatei für 120.168.192.in-addr.arpa.
 ; /etc/bind/db.192.168.220
 ;
 $TTL    3600
@@ -156,7 +156,9 @@ $TTL    3600
 10      IN      PTR     vmls1.dmz.mattefit.ch.
 ```
 
-```
+Um die Zonen von `Bind` einlesen lassen zu können, müssen folgende Änderungen an `/etc/bind/named.conf.local` angehängt werden:
+
+```text
 //
 // DMZ
 //
@@ -172,7 +174,14 @@ zone "220.168.192.in-addr.arpa" {
 };
 ```
 
-```
+## Weitere Zonen einrichten
+
+Hier werden Zonen fürs LAN eingerichtet:
+
+- Eine Zone für das LAN, Hosts vmLF1 und vmWP1
+- Eine Reverse Zone mit Records für die Hosts vmLF1 und vmWP1
+
+```text
 ;
 ; Zonendatei für lan.mattefit.ch.
 ; /etc/bind/db.ch.mattefit.lan
@@ -190,7 +199,7 @@ vmlf1   IN      A       192.168.110.1
 vmwp1   IN      A       192.168.110.10
 ```
 
-```
+```text
 ;
 ; Zonendatei für 110.168.192.in-addr.arpa.
 ; /etc/bind/db.192.168.110
@@ -208,7 +217,9 @@ $TTL    3600
 10      IN      PTR     vmwp1.lan.mattefit.ch.
 ```
 
-```
+Auch hier muss wieder der entsprechende Eintrag im `/etc/bind/named.conf.local` gemacht werden:
+
+```text
 //
 // LAN
 //
@@ -223,3 +234,58 @@ zone "110.168.192.in-addr.arpa" {
         file "/etc/bind/db.192.168.110";
 };
 ```
+
+## Zonen für die Mitarbeiter-Websites
+
+### DNS-Zone "staff.mattefit.ch"
+
+Um die DNS-Zone für die Mitarbeiterseiten zu erstellen, wird zunächst folgender Eintrag in `/etc/bind/named.conf.local` erstellt:
+
+```text
+//
+// staff
+//
+zone "staff.mattefit.ch" {
+    type master;
+    file "/etc/bind/db.ch.mattefit.staff"
+};
+```
+
+Die entsprechende Zonen-Datei beinhaltet die Zonen, d.h. hier werden schon die Mitarbeitersites angegeben - in diesem Fall `admin` sowie `menpa`:
+
+```text
+;
+; Zone file for staff.mattefit.ch
+;
+$TTL 3600   ; 1 hour 
+
+@   IN  SOA vmls1.dmz.mattefit.ch. root.mattefit.ch. (
+    1       ; Serial number
+    1H      ; Refresh
+    2H      ; Retry
+    1D      ; Expire
+    1H )    ; Negative caching TTL
+
+; Name server record
+@   IN  NS  vmls1.dmz.mattefit.ch.
+
+; CNAME records
+menpa   IN  CNAME vmls1.dmz.mattefit.ch.
+admin   IN  CNAME vmls1.dmz.mattefit.ch.
+
+; MX record for mail server
+@   IN  MX  10  ex10.host-ed.mail.
+```
+
+## Resultate
+
+In diesem Kapitel werden nslookups von vmWP1 aus angezeigt:
+
+`menpa.staff.mattefit.ch`:
+![Alt text](image-15.png)
+
+`admin.staff.mattefit.ch`:
+![Alt text](image-17.png)
+
+`dmz.mattefit.ch`:s
+![Alt text](image-16.png)

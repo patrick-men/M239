@@ -287,5 +287,5 @@ In diesem Kapitel werden nslookups von vmWP1 aus angezeigt:
 `admin.staff.mattefit.ch`:
 ![Alt text](image-17.png)
 
-`dmz.mattefit.ch`:s
+`dmz.mattefit.ch`:
 ![Alt text](image-16.png)

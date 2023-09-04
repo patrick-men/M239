@@ -163,7 +163,7 @@ vmls1   IN      A       192.168.220.10
 ```text
 ;
 ; Zonendatei für 120.168.192.in-addr.arpa.
-; /etc/bind/db.192.168.220
+; /etc/bind/db.192.168.120
 ;
 $TTL    3600
 @       IN      SOA     vmls1.dmz.mattefit.ch.      root.mattefit.ch. (

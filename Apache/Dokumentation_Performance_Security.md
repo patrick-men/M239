@@ -81,4 +81,65 @@ SSLCertificateKeyFile /etc/ssl/ch.mattefit.admin_san.key
 
 Anschliessend werden die Änderungen mit `sudo systemctl reload apache2` gespeichert
 
-#### Ciphers reduzieren
+#### Ciphers reduzieren$
+
+Wir möchten die vom Server erlaubten Ciphers auf die nötigen Reduzieren. Hierzu müssen wir folgendes in `/etc/apache2/sites-available/ch.mattefit.admin_ssl.conf` einfügen:
+
+```conf
+# Liste der empfohlenen Ciphers
+SSLCipherSuite "TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-CHACHA20-POLY1305"
+```
+
+Anschliessend werden die Änderungen mit `sudo systemctl reload apache2` gespeichert.
+
+## Apache-Config-Anpassungen, gem. 402
+
+Nebst den zuvor getätigten Änderungen gibt es noch weitere Anpassungen an den Configs, welche eine bessere Härtung erlauben:
+
+### Informationen einschränken mit..
+
+#### ...ServerBanner
+
+```conf
+ServerTokens Apache
+ServerSignature Off
+```
+
+#### ...Deaktivieren der Etag-Funktion
+Der Etag dient dazu, das Cache-Verhalten zu verbessern, kann aber auch eine Sicherheitslücke sein.
+
+```conf
+FileETag None
+```
+
+#### ...Einstellungen der Benutzer beschränken
+
+```conf
+AllowOverride None
+```
+
+#### ...http-Verben einschränken
+
+Hiermit können wir einschränken, dass User nur die hier definierten Verben in den Befehlen ausführen können.
+
+```conf
+<LimitExcept GET POST HEAD>
+deny from all
+</LimitExcept>
+```
+
+#### ...Timeout setzen
+
+Apache hält eine Verbindung, die nicht aktiv genutzt wird, für 300 Sekunden. Dies kann u.a. bei DDoS-Attacken ausgenutzt werden.
+
+```conf 
+Timeout 60
+```
+
+### Logdateien analysieren
+
+Hierzu nutzen wir `goaccess`. Wir analysieren das `/var/log/apache2/1slmv_access.log` mit dem Befehl `goaccess 1slmv_access.log`.
+
+Da kein aktueller Verkehr auf dieser Seite ist, sieht das Log mit `goaccess` wie folgt aus:
+
+![goaccess](image-20.png)
